@@ -1,0 +1,233 @@
+---
+layout: default
+---
+{% include base.html %}
+<section id="intro" class="hero is-fullheight">
+  	<div class="hero-body">
+		<div class="container">
+			<div class="columns is-centered is-vcentered">
+				<div class="column is-fullwidth has-text-centered">
+					<h2>
+						Keep your podcast talking
+						<br />
+						For all who are listening
+					</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	<a href="#episodes">
+		<div>Follow these steps</div>
+		<span class="icon is-large">
+		  <i class="fas fa-l2x fa-play"></i>
+		</span>
+	</a>
+</section>
+
+{% if site.data.content.episodes %}
+<section id="episodes" class="section" name="podcast">
+	<div class="container">
+		<h2>LISTEN: how &amp; why to preserve your podcast</h2>
+		{% for episode in site.data.content.episodes %}
+
+{% if episode.transcript_file %}
+{% assign transcript_path = 'transcripts/'| append: episode.transcript_file | append: '.md' %}
+{% capture transcript_content %}{% include_relative {{transcript_path}} %}{% endcapture %}
+<div class="modal" id="transcript-{{ forloop.index }}">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="box">
+			<div class="content">
+	  			{{ transcript_content | markdownify }}
+	  		</div>
+		</div>
+	</div>
+	<button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endif %}
+
+		<div class="box">
+			<div class="columns is-vcentered">
+			<div class="column">
+
+			<div class="columns is-vcentered is-mobile">
+				<div class="column is-narrow">
+					<span class="count">
+						{{ forloop.index }}
+					</span>
+				</div>
+				<div class="column">
+					<h3>{{ episode.name }}</h3>
+					<a href="{{ episode.download_link }}">Download episode</a>{% if episode.transcript_file %}&nbsp;&nbsp;|&nbsp;&nbsp;<a data-modal="#transcript-{{ forloop.index }}" href="#">Read transcript</a>{% endif %}{% if episode.exercises_link %}&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ episode.exercises_link }}" target="_blank">Do the exercises</a>{% endif %}
+				</div>
+			</div>
+
+			</div>
+			<div class="column is-narrow">
+					<a href="{{ episode.download_link }}" data-embed-link="{{ episode.embed_link }}" class="button is-primary is-large player-button" target="_blank">
+						<span class="icon">
+						  <i class="fas fa-play"></i>
+						</span>&nbsp;
+						Play
+					</a>
+			</div>
+			</div>
+		</div>
+		{% endfor %}
+
+		<a class="button is-primary is-small" data-modal="#subscribe" href="#">
+			<span class="icon">
+			  <i class="fas fa-rss"></i>
+			</span>&nbsp;
+			Subscribe
+		</a>
+
+	</div>
+	<div id="player-container"></div>
+</section>
+{% endif %}
+<div class="modal" id="subscribe">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="box">
+			<div class="content has-text-centered">
+	  			<h2>
+	  				Subscribe on...
+	  			</h2>
+	  			<div class="columns">
+	  				{% if site.data.content.applepodcasts_link %}
+	  				<div class="column">
+	  					<strong><a href="{{ site.data.content.applepodcasts_link }}">
+	  						<img src="{{ '/assets/images/apple_icon.svg' | relative_url }}" alt="Subscribe on Apple Podcasts"><br />
+	  						Apple Podcasts</a></strong>
+	  				</div>
+	  				{% endif %}
+	  				{% if site.data.content.googlepodcasts_link %}
+	  				<div class="column">
+	  					<strong><a href="{{ site.data.content.googlepodcasts_link }}">
+	  						<img src="{{ '/assets/images/google_icon.svg' | relative_url }}" alt="Subscribe on Google Podcasts"><br />
+	  						Google Podcasts</a></strong>
+	  				</div>
+	  				{% endif %}
+	  			</div>
+	  			{% if site.data.content.radiopublic_link %}<a href="{{ site.data.content.radiopublic_link }}">Radiopublic</a>{% endif %}{% if site.data.content.stitcher_link %}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="{{ site.data.content.stitcher_link }}">Stitcher</a>{% endif %}{% if site.data.content.rss_link %}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="{{ site.data.content.rss_link }}">RSS Feed</a>{% endif %}
+	  		</div>
+		</div>
+	</div>
+	<button class="modal-close is-large" aria-label="close"></button>
+</div>
+<section id="zine" class="section" name="zine">
+		<div class="columns is-centered">
+			<div class="column is-half-widescreen">
+				<a class="preview" href="#">
+					<img src="{{base}}/assets/images/zineCoverFinal.png" alt="Preserve Your Podcast Zine">
+				</a>
+				<div class="box">
+					<div class="content">
+					<h2 class="is-inline-block">READ: the zine &amp; workbook</h2>
+					<p>Our zine shines a light on the risks to digital files, and offers what you can do to prevent catastrophe while also saving &amp; organizing your files for future access. Use it to follow along with our podcast, during a workshop, or on your own. It is absolutely free for you to read online, download, print, and distribute. </br></p>
+           <u><a href="/assets/ZineJr_PreserveThisPodcastWorkshop_frontback.pdf" target="_blank">Zine Jr. (the mini-workbook from our workshop)</a></u> is also available to print front-back on one page. Simple <u><a href="/assets/zineJr-instructions.html" target="_blank">cut-and-fold instruction here.</a></u></p>
+      <p>Download & color! From Episode 4 <u><a href="/assets/PreserveThisPodcast_metadata_coloring_sheet-bw.png" target="_blank">Metadata Archaeology Coloring Sheet</a></u> (pg. 12 in the zine)</p>
+					{% if site.data.content.zine_link %}
+						<a href="{{ site.data.content.zine_link }}" class="button is-primary is-large is-marginless" target="_blank">Read Online</a>
+					{% else %}
+						<button disabled class="button is-large is-marginless">Read Online</button>
+					{% endif %}
+					&nbsp; &nbsp; <a href="{{ site.data.content.zinePrint_link }}" class="button is-primary is-large is-marginless" target="_blank">Print &amp; Read</a>
+					&nbsp; &nbsp; <a href="http://preservethispodcast.org/adventure" class="button is-primary is-large is-marginless" target="_blank">Play Game!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+</section>
+<section id="survey" class="section">
+	<div class="columns is-centered">
+		<div class="column is-half">
+			<div class="box has-text-centered">
+				<div class="content">
+					<a href="{{ base }}/assets/PodcastPreservation_SurveyFindings_Feb2019.pdf" target="_blank" class="button is-primary is-large"><img src="{{base}}/assets/images/bar-chart-2.png" alt="Bar chart icon representing survey data">&nbsp; Data & Results (PDF)</a>
+				</div>
+			</div>
+      		<div class="box has-text-centered">
+				<div class="content">
+          			<a href="{{ base }}/pages/reading-list.html" target="_blank" class="button is-primary is-large"><img src="{{base}}/assets/images/book-open.png" alt="Book open icon representing reading list">&nbsp; Reading List</a>
+				</div>
+			</div>
+      		<div class="box has-text-centered">
+				<div class="content">
+					<a href="{{ base }}/assets/Podcast_Guest_Release_Form_Template.odt" target="_blank" class="button is-primary is-large"><img src="{{base}}/assets/images/user-check.png" alt="Person checkmark icon representing release form">&nbsp; Guest Release Form Template &nbsp;<img src="{{base}}/assets/images/download.png" alt="Download icon"></a>
+				</div>
+			</div>
+      		<div class="box has-text-centered">
+				<div class="content">
+					<a href="{{ base }}/pages/diyworkshop.html" target="_blank" class="button is-primary is-large"><img src="{{base}}/assets/images/nounProject_Meeting_1057559_akritiBhusalNP.png 	" alt="Group of people meeting around a table">&nbsp; Guide to Host Your Own Workshop</a>
+				</div>
+      		</div>
+        	<div class="box has-text-centered">
+          		<div class="content">
+            		<a href="{{ base }}/pages/self-preservation.html" target="_blank" class="button is-primary is-large"><img src="{{base}}/assets/images/nounProject_SelfCare_2068908_priyankaIN.png" alt="Hand holding a leaf and happy face">&nbsp; Self Preservation Docs</a>
+          		</div>
+        	</div>
+      		<div class="box has-text-centered">
+				<div class="content">
+					<a href="https://github.com/mnylc/preservethispodcast" target="_blank" class="button is-primary is-large"><img src="{{base}}/assets/images/github.png" alt="GitHub logo icon representing Github">&nbsp; DIY Website & RSS Feed</a>
+				</div>
+			</div>
+ 			<div class="box has-text-centered">
+            	<div class="content">
+                	<a href="{{ base }}/pages/workshop-webinar.html" target="_blank" class="button is-primary is-large"><img src="{{base}}/assets/i
+mages/videoCourse.png" alt="video player icon">&nbsp; Workshop Webinar Recordings</a>
+				</div>
+			</div>
+		</div>
+        </div>
+</section>
+<section id="events" class="section" name="events">
+
+	<div class="columns is-centered">
+		<div class="column is-half-desktop">
+			<div class="box">
+				<div class="content">
+					<h2 class="is-inline-block">ATTEND: workshops &amp; conferences</h2>
+					<p>We want to meet you! The archivists of Preserve This Podcast will be traveling to various workshops + conferences to take podcasters, producers, and audio archivists through the curriculum of archiving podcasts. Contact us at <u>preservethispodcast[at]protonmail.com</u> if you're interested in hosting a workshop.</p>
+          <p>Here's how you can <a href="http://preservethispodcast.org/pages/diyworkshop">host your own workshop</a></p>
+<p>Missed a workshop? Watch a <a href="{{ base }}/pages/workshop-webinar.html">recording a workshop webinar</a></p>
+				</div>
+
+				{% for event in site.data.content.events %}
+				<div class="event">
+					<div class="columns is-vcentered">
+						<div class="column">
+							<h3>{{ event.name }}</h3>
+							<p>{{ event.when }}{% if event.when and event.where %}&nbsp;&nbsp;|&nbsp;&nbsp;{% endif %}{{ event.where }}</p>
+						</div>
+						<div class="column is-narrow">
+							<a href="{{ event.url }}" target="_blank" class="button is-primary">
+								RSVP
+							</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+<div class="content">
+  <h3 class="has-text-white"> >> PAST EVENTS << </h3>
+</div>
+{% for event in site.data.content.past_events %}
+<div class="event">
+	<div class="columns is-vcentered">
+		<div class="column">
+			<h3>{{ event.name }}</h3>
+			<p>{{ event.when }}{% if event.when and event.where %}&nbsp;&nbsp;|&nbsp;&nbsp;{% endif %}{{ event.where }}</p>
+		</div>
+		<div class="column is-narrow">
+			<a href="{{ event.url }}" target="_blank" class="button is-primary">
+				View Details
+			</a>
+		</div>
+	</div>
+</div>
+{% endfor %}
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,43 @@
+title: Preserve This Podcast
+description: Preserve This Podcast is a project funded by the Andrew W. Mellon Foundation. We want to make sure that podcasts don’t disappear as software formats change and RSS hosting services go down.
+baseurl: ""
+url: "http://www.preservethispodcast.org"
+
+# Markdown settings
+markdown: kramdown
+
+# Sass settings
+sass:
+  add_charset: true
+  sass_dir: assets/sass
+  style: :compressed
+
+# Build settings
+exclude:
+  - package.json
+  - README.md
+  - CNAME
+  - assets/sass
+
+# Plugin settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Podcast Feed settings
+title:          Preserve This Podcast
+email:          preservethispodcast@protonmail.com
+description:    "Preserve This Podcast is an Andrew W. Mellon grant-funded project hosted by the Metropolitan New York Library Council (METRO) to help podcasters protect their work against the threats of digital decay."
+subtitle:       "A podcast about saving your podcast."
+url:            http://preservethispodcast.org/
+language:       en-us
+author:         PreserveThisPodcast
+copyright:      "CC BY 4.0"
+
+feed:
+  collections:
+    episodes:
+      path: "/episodes.xml"
+
+collections:
+  episodes:
